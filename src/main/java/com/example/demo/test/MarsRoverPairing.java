@@ -20,11 +20,11 @@ public class MarsRoverPairing {
     private static int y_range;
     private static int x;
     private static int y;
-    private static String p;
+    private static char p;
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        int count = 0;
+        int count = 1;
         String result = "";
         do {
             String readLine = scan.nextLine();
@@ -32,20 +32,23 @@ public class MarsRoverPairing {
             switch (count) {
                 case 1 :
                     initCoordinate(readLine);
-                    System.out.println("调用方法1:" + result);
+                    System.out.println("调用方法1后输出数据:" + result);
+                    break;
                 case 2 :
                     result = readLine;
                     initPosition(readLine);
-                    System.out.println("调用方法2:" + result);
+                    System.out.println("调用方法2后输出数据:" + result);
+                    break;
                 case 3 :
                     try {
                         result = getChangePosition(readLine);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println("调用方法3:" + result);
+                    System.out.println("调用方法3后输出数据:" + result);
+                    break;
                 default:
-                    System.out.println("输出结果");
+                    System.out.println("结束输入后输出最终结果:" + result);
             }
 
             if (readLine.equals("")) {
@@ -66,8 +69,7 @@ public class MarsRoverPairing {
         String[] strs = readLine.split(" ");
         x = Integer.parseInt(strs[0]);
         y = Integer.parseInt(strs[1]);
-        p = strs[2];
-
+        p = (strs[2].toCharArray())[0];
     }
 
     private static String getChangePosition (String readLine) throws Exception {
