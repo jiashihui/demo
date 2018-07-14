@@ -24,7 +24,7 @@ public class MarsRoverPairing {
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        int count = 0;
+        int count = 1;
         String result = "";
         do {
             String readLine = scan.nextLine();
@@ -32,20 +32,23 @@ public class MarsRoverPairing {
             switch (count) {
                 case 1 :
                     initCoordinate(readLine);
-                    System.out.println("调用方法1:" + result);
+                    System.out.println("调用方法1:" + result + "| count: " + count);
+                    break;
                 case 2 :
                     result = readLine;
                     initPosition(readLine);
-                    System.out.println("调用方法2:" + result);
+                    System.out.println("调用方法2:" + result + "| count: " + count);
+                    break;
                 case 3 :
                     try {
                         result = getChangePosition(readLine);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    System.out.println("调用方法3:" + result);
+                    System.out.println("调用方法3:" + result + "| count: " + count);
+                    break;
                 default:
-                    System.out.println("输出结果");
+                    System.out.println("调用方法3:" + result + "| count: " + count);
             }
 
             if (readLine.equals("")) {
@@ -92,16 +95,16 @@ public class MarsRoverPairing {
 
     private static void move () throws Exception {
         switch (p) {
-            case 'E' :
+            case "E" :
                 x = x + 1;
                 break;
-            case 'S' :
+            case "S" :
                 y = y - 1;
                 break;
-            case 'W' :
+            case "W" :
                 x = x - 1;
                 break;
-            case 'N' :
+            case "N" :
                 y = y + 1;
                 break;
             default:
@@ -111,17 +114,17 @@ public class MarsRoverPairing {
 
     private static void turnL () throws Exception {
         switch (p) {
-            case 'E' :
-                p = 'N';
+            case "E" :
+                p = "N";
                 break;
-            case 'S' :
-                p = 'E';
+            case "S" :
+                p = "E";
                 break;
-            case 'W' :
-                p = 'S';
+            case "W" :
+                p = "S";
                 break;
-            case 'N' :
-                p = 'W';
+            case "N" :
+                p = "W";
                 break;
             default:
                 throw new Exception();
@@ -131,17 +134,17 @@ public class MarsRoverPairing {
 
     private static void turnR () throws Exception {
         switch (p) {
-            case 'E' :
-                p = 'S';
+            case "E" :
+                p = "S";
                 break;
-            case 'S' :
-                p = 'W';
+            case "S" :
+                p = "W";
                 break;
-            case 'W' :
-                p = 'N';
+            case "W" :
+                p = "N";
                 break;
-            case 'N' :
-                p = 'E';
+            case "N" :
+                p = "E";
                 break;
             default:
                 throw new Exception();
