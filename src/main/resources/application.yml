@@ -25,7 +25,16 @@ spring:
       maxOpenPreparedStatements: 20
 mybatis:
   mapper-locations: classpath:mapping/*.xml
+  #批量给model包下取别名
   type-aliases-package: com.example.demo.model
+  configuration:
+    # 全局性设置懒加载。如果设为‘false'，则所有相关联的都会被初始化加载。
+    lazy-loading-enabled: true
+    #当设置为‘true'的时候，懒加载的对象可能被任何懒属性全部加载。否则，每个属性都按需加载。
+    aggressive-lazy-loading: false
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    #设置启用数据库字段下划线映射到java对象的驼峰式命名属性，默认为false
+    map-underscore-to-camel-case: true
 
 #pagehelper分页插件
 pagehelper:
