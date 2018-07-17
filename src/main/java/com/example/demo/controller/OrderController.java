@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.mapper.OrderMapper;
 import com.example.demo.model.Order;
 import com.example.demo.model.User;
+import com.example.demo.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,11 +15,11 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    private OrderMapper orderMapper;
+    private OrderService orderService;
 
     @RequestMapping(value="/getOrders", method = RequestMethod.GET)
     public void getOrders(){
-        List<Order> orders = orderMapper.getOrderByOrderId();//第一步
+        List<Order> orders = orderService.getOrders();//第一步
         for(Order order : orders){
             User user = order.getUser();
             System.out.println(user.getUserName());//第二步

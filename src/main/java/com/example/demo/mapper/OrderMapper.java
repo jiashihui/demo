@@ -19,7 +19,7 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
     //得到订单信息(包含user_id)
-    List<Order> getOrderByOrderId();
+    List<Order> getOrders();
     //根据用户ID查询用户信息
     User getUserByUserId(int userID);
 }

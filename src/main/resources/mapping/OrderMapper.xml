@@ -19,7 +19,7 @@
   </sql>
 
   <!-- 2018-07-16 -->
-  <select id="getOrderByOrderId" resultMap="getOrderMap">
+  <select id="getOrders" resultMap="getOrderMap">
     select
     <include refid="Base_Column_List" />
     from t_order
