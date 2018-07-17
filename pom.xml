@@ -6,7 +6,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>demo</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>demo</name>
 
@@ -57,6 +57,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.35</version>
 		</dependency>
+		<!-- sql server data drive -->
+		<!--<dependency>-->
+			<!--<groupId>com.microsoft.sqlserver</groupId>-->
+			<!--<artifactId>sqljdbc4</artifactId>-->
+			<!--<version>4.0</version>-->
+		<!--</dependency>-->
 
 		<!-- TODO -->
 		<dependency>
@@ -123,6 +129,12 @@
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger2</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<!-- Swagger UI来生成一个可读性良好的api页面 -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.2.2</version>
 		</dependency>
 	</dependencies>
