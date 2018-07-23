@@ -2,10 +2,21 @@ package com.example.demo.mapper;
 
 import com.example.demo.model.Order;
 import com.example.demo.model.User;
+import org.apache.ibatis.session.RowBounds;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface OrderMapper {
+
+    /**
+     * 测试rowBounds分页
+     * @param rowBounds
+     * @return
+     */
+    List<Order> findRecords();
+    //List<Order> findRecords(RowBounds rowBounds);
+
     int deleteByPrimaryKey(Order key);
 
     int insert(Order record);

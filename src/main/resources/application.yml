@@ -32,9 +32,12 @@ mybatis:
     lazy-loading-enabled: true
     #当设置为‘true'的时候，懒加载的对象可能被任何懒属性全部加载。否则，每个属性都按需加载。
     aggressive-lazy-loading: false
+    #控制台打印sql
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     #设置启用数据库字段下划线映射到java对象的驼峰式命名属性，默认为false
     map-underscore-to-camel-case: true
+    #开启二级缓存 mapper
+    cache-enabled: true
 
 #pagehelper分页插件
 pagehelper:

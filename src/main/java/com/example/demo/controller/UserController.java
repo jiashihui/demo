@@ -1,8 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.common.MessageCode;
-import com.example.demo.model.base.BaseResponse;
 import com.example.demo.model.User;
+import com.example.demo.model.base.BaseResponse;
 import com.example.demo.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
