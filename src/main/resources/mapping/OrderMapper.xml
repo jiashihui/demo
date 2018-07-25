@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.model.Order" >
+    <id column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <id column="product_id" property="productId" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="order_date" property="orderDate" jdbcType="TIMESTAMP" />
+    <result column="order_address" property="orderAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, user_id, product_id, price, order_date, order_address
+  </sql>
+
+  <!-- 开启当前mapper的namespace下的二级缓存 -->
+  <!-- 以下配置创建了一个LRU缓存，并每隔60秒刷新，最大存储512个对象，而且返回的对象被认为是只读。 -->
+  <!-- cache元素用来开启当前mapper的namespace下的二级缓存，该元素的属性设置如下：
+       flushInterval：刷新间隔，可以被设置为任意的正整数，而且它们代表一个合理的毫秒形式的时间段，默认情况下是不设置的，也就是没有刷新间隔，缓存仅仅调用语句时刷新。
+       size：缓存数目，可以被设置为任意正整数，要记住你的缓存对象数目和你运行环境可用内存资源数目，默认值是1024.
+       readOnly：只读，属性可以被设置为true或false，只读的缓存会给所有调用者返回缓存对象的相同实例，因此这些对象不能被修改。这提供了很重要的性能优势，可读写的缓存会返回缓存对象的拷贝（通过序列化），这会慢一些，但是安全，因此默认是false。
+       eviction：收回策略，默认为LRU，有如下几种：
+            LRU：最近最少使用的策略，移除最长时间不被使用的对象。
+            FIFO：先进先出策略，按对象进入缓存的顺序来移除它们。
+            SOFT：软引用策略，移除基于垃圾回收器状态和软引用规则的对象。
+            WEAK：弱引用策略，更积极地移除基于垃圾收集器状态和弱引用规则的对象。
+   -->
+  <cache eviction="LRU" flushInterval="60000" size="512" readOnly="true"/>
+
+  <!-- 2018-07-16 -->
+  <sql id="user_Column_List" >
+    user_id, user_name, password, phone, address
+  </sql>
+
+  <!-- 2018-07-16 -->
+  <!--  useCache="false" 禁用二级缓存-->
+  <select id="findRecords" resultMap="BaseResultMap" useCache="false">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+  </select>
+
+  <!-- 2018-07-16 -->
+  <select id="getOrders" resultMap="getOrderMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_order
+  </select>
+  <resultMap type="com.example.demo.model.Order" id="getOrderMap">
+    <id column="id" property="id"/>
+    <result column="number" property="number"/>
+    <!-- select:指定延迟加载需要执行的statement的id（根据user_id查询的statement）
+                如果不在本文件中，需要加上namespace
+         property:resultMap中type指定类中的属性名
+         column:和select查询关联的字段user_id
+     -->
+    <association property="user" javaType="com.example.demo.model.User"  column="user_id" select="getUserByUserId"></association>
+  </resultMap>
+  <select id="getUserByUserId" resultType="com.example.demo.model.User">
+    select
+    <include refid="user_Column_List"/>
+    from t_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demo.model.Order" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=INTEGER}
+      and product_id = #{productId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.demo.model.Order" >
+    delete from t_order
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=INTEGER}
+      and product_id = #{productId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.model.Order" >
+    insert into t_order (order_id, user_id, product_id, 
+      price, order_date, order_address
+      )
+    values (#{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{productId,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{orderDate,jdbcType=TIMESTAMP}, #{orderAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.model.Order" >
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="orderDate != null" >
+        order_date,
+      </if>
+      <if test="orderAddress != null" >
+        order_address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="orderDate != null" >
+        #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderAddress != null" >
+        #{orderAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Order" >
+    update t_order
+    <set >
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="orderDate != null" >
+        order_date = #{orderDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderAddress != null" >
+        order_address = #{orderAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=INTEGER}
+      and product_id = #{productId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Order" >
+    update t_order
+    set price = #{price,jdbcType=DECIMAL},
+      order_date = #{orderDate,jdbcType=TIMESTAMP},
+      order_address = #{orderAddress,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=VARCHAR}
+      and user_id = #{userId,jdbcType=INTEGER}
+      and product_id = #{productId,jdbcType=VARCHAR}
+  </update>
+</mapper>
