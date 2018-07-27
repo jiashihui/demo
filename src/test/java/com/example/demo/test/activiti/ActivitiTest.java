@@ -44,7 +44,6 @@ public class ActivitiTest {
         cfg.setDatabaseSchemaUpdate(ProcessEngineConfiguration.DB_SCHEMA_UPDATE_TRUE);
         ProcessEngine engine = cfg.buildProcessEngine();
     }
-
     /**
      * 根据配置文件activiti.cfg.xml创建ProcessEngine
      */
