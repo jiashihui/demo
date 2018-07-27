@@ -137,6 +137,18 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.2.2</version>
 		</dependency>
+		<!-- Activiti 工作流 -->
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-engine</artifactId>
+			<version>5.18.0</version>
+		</dependency>
+		<!--- Activiti依赖导入 -->
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-spring</artifactId>
+			<version>5.18.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
