@@ -14,7 +14,6 @@ public class EncryptionPropertyConfig {
     }
 
     class EncryptionPropertyResolver implements EncryptablePropertyResolver {
-
         @Override
         public String resolvePropertyValue(String value) {
             if(StringUtils.isBlank(value)) {
