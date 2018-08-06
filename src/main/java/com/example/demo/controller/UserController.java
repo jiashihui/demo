@@ -8,6 +8,9 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/user")
 public class UserController {
 
+    //编程式事务
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
     @Autowired
     private UserService userService;
 
@@ -25,7 +32,13 @@ public class UserController {
     @RequestMapping(value="/add", method = RequestMethod.POST)
     public BaseResponse addUser(@RequestBody @NonNull User user){
         BaseResponse baseResponse = new BaseResponse(MessageCode.SUCCESS, MessageCode.SUCCESS_MSG);
-        int result = userService.insert(user);
+
+        int result = transactionTemplate.execute((TransactionStatus transactionStatus) -> {
+            int r = userService.insert(user);
+            int a = 5/0;
+            return r;
+        });
+
         if(result != 1){
             baseResponse.setCode(MessageCode.FAIL);
             baseResponse.setMessage(MessageCode.FAIL_MSG);
